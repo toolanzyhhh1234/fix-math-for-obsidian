@@ -419,6 +419,7 @@ $$`;
     //   - trailing "\" at end of line → "\\" (broken matrix row separators)
     //   - "\" before digit or minus → "\\" (compact column vectors)
     //   - "====..." on its own line → "=" (setext-heading artifact for "=")
+    //     Also handles optional indentation and ">" prefixes from quote exports.
     //   - "## formula" at line start → "formula\n-"
     //     ChatGPT marks terms followed by subtraction with "##".
     //     Remove the prefix and append "-" on the next line.
@@ -428,8 +429,8 @@ $$`;
         block
             .replace(/(?<!\\)\\[ \t]*$/gm, "\\\\")
             .replace(/(?<!\\)\\(?=[0-9-])/g, "\\\\")
-            .replace(/^={3,}$/gm, "=")
-            .replace(/^-{3,}$/gm, "-")
+            .replace(/^[ \t]*(?:>[ \t]*)?={3,}[ \t]*$/gm, "=")
+            .replace(/^[ \t]*(?:>[ \t]*)?-{3,}[ \t]*$/gm, "-")
             .replace(/^#{1,6}[ \t]+(.*)/gm, "$1\n-")
             .replace(/^([+-]),/gm, "$1")
     );

@@ -305,7 +305,7 @@ $$`;
   }
   out = out.replace(
     /\$\$([\s\S]*?)\$\$/g,
-    (block) => block.replace(/(?<!\\)\\[ \t]*$/gm, "\\\\").replace(/(?<!\\)\\(?=[0-9-])/g, "\\\\").replace(/^={3,}$/gm, "=").replace(/^-{3,}$/gm, "-").replace(/^#{1,6}[ \t]+(.*)/gm, "$1\n-").replace(/^([+-]),/gm, "$1")
+    (block) => block.replace(/(?<!\\)\\[ \t]*$/gm, "\\\\").replace(/(?<!\\)\\(?=[0-9-])/g, "\\\\").replace(/^[ \t]*(?:>[ \t]*)?={3,}[ \t]*$/gm, "=").replace(/^[ \t]*(?:>[ \t]*)?-{3,}[ \t]*$/gm, "-").replace(/^#{1,6}[ \t]+(.*)/gm, "$1\n-").replace(/^([+-]),/gm, "$1")
   );
   const parts = out.split(/(\$\$[\s\S]*?\$\$)/);
   out = parts.map((part, idx) => {
